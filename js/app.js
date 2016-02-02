@@ -19,11 +19,31 @@ function initMap() {
 
 // MODEL //
 var restaurants = [
-    ['Cafe Hollander', 43.0664868, -87.87782729999998, 4],
-    ['Beans & Barley', 43.05928, -87.892999, 5],
-    ['Colectivo', 43.0591269, -87.88515799999999, 3],
-    ['Rochambo', 43.052783, -87.894867, 2],
-    ['Anodyne', 43.0254467, -87.91364299999998, 1]
+    {
+        name: "Cafe Hollander",
+        lat: 43.0664868,
+        lng: -87.87782729999998
+    },
+    {
+        name: "Beans & Barley",
+        lat: 43.05928,
+        lng: -87.892999
+    },
+    {
+        name: "Colectivo",
+        lat: 43.0591269,
+        lng: -87.88515799999999
+    },
+    {
+        name: "Rochambo",
+        lat: 43.052783,
+        lng: -87.894867
+    },
+    {
+        name: "Anodyne",
+        lat: 43.0254467,
+        lng: -87.91364299999998
+    }
 ];
 
 function setMarkers(map) {
@@ -41,7 +61,8 @@ function setMarkers(map) {
 
 
 
-// ko.applyBindings(new RestaurantsViewModel());
+
+ ko.applyBindings(new RestaurantsViewModel());
 
 //Knockout js
 // This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
