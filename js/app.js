@@ -77,7 +77,7 @@ function viewModel() {
         for (var i = 0; i < self.locations.length; i++) {
             //var restaurant = locations[i];
             var marker = new google.maps.Marker({
-                position: {lat: restaurants.lat, lng: restaurants.lng},
+                position: {lat: locations.lat, lng: locations.lng},
                 map: map,
                 title: name
 
