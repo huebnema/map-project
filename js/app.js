@@ -38,7 +38,7 @@ function initMap() {
 function viewModel() {
     var self = this;
 
-    self.restaurants = ko.observableArray([
+    self.locations = ko.observableArray([
         {
             name: "Cafe Hollander",
             lat: (43.0664868),
@@ -74,8 +74,8 @@ function viewModel() {
       function setMarkers(map) {
         // Adds markers to the map.
 
-        for (var i = 0; i < restaurants.length; i++) {
-            var restaurant = restaurants[i];
+        for (var i = 0; i < self.locations.length; i++) {
+            //var restaurant = locations[i];
             var marker = new google.maps.Marker({
                 position: {lat: restaurants.lat, lng: restaurants.lng},
                 map: map,
