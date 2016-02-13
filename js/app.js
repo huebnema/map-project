@@ -42,7 +42,7 @@ function viewModel() {
         {
             name: "Cafe Hollander",
             lat: (43.0664868),
-            Lng: (-87.87782729999998)
+            lng: (-87.87782729999998)
         }
 
     ]);
@@ -69,18 +69,16 @@ function viewModel() {
     //        latLng: (43.0254467, -87.91364299999998)
     //    }
     //]);
-}
 
-      function setMarkers(map) {
+    function setMarkers(map) {
         // Adds markers to the map.
 
-        for (var i = 0; i < self.locations.length; i++) {
+        for (var i = 0; i < self.locations().length; i++) {
             //var restaurant = locations[i];
             var marker = new google.maps.Marker({
-                position: {lat: locations.lat, lng: locations.lng},
+                position: {lat: self.locations()[i].lat, lng: self.locations()[i].lng},
                 map: map,
                 title: name
-
                 //position: {lat: restaurant[1], lng: restaurant[2]},
                 //map: map,
                 //title: restaurant[0],
@@ -89,9 +87,16 @@ function viewModel() {
         }
     }
 
-// ko.applyBindings(new viewModel);
+    setMarkers(map);
+
+}
 
 
+
+ko.applyBindings(new viewModel);
+
+
+console.log(map);
 
 //function point(name, lat, long) {
 //    this.name = name;
