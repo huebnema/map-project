@@ -9,6 +9,7 @@
 //var map, marker;
 
 //  Map scripts
+
 function initMap() {
     var myLatLng = {lat: 43.05, lng: -87.95};
 
@@ -17,12 +18,6 @@ function initMap() {
         center: myLatLng
     });
 
-    //var marker = new google.maps.Marker({
-    //    position: myLatLng,
-    //    map: map,
-    //    title: 'Hello World!'
-    //});
-
     viewM.setMarkers();
 
 }
@@ -30,55 +25,47 @@ function initMap() {
 function viewModel() {
     var self = this;
 
-    self.locations = ko.observableArray([
-        {
-            name: "Cafe Hollander",
-            lat: (43.0664868),
-            lng: (-87.87782729999998)
-        }
-
-    ]);
-
-    //self.restaurants = ko.observableArray([
-    //    {
-    //        name: "Cafe Hollander",
-    //        latLng: (43.0664868, -87.87782729999998)
-    //    },
-    //    {
-    //        name: "Beans & Barley",
-    //        latLng: (43.05928, -87.892999)
-    //    },
-    //    {
-    //        name: "Colectivo",
-    //        latLng: (43.0591269, -87.88515799999999)
-    //    },
-    //    {
-    //        name: "Rochambo",
-    //        latLng: (43.052783, -87.894867)
-    //    },
-    //    {
-    //        name: "Anodyne",
-    //        latLng: (43.0254467, -87.91364299999998)
-    //    }
-    //]);
-
     this.setMarkers = function() {
         // Adds markers to the map.
         var self = this;
 
         for (var i = 0; i < self.locations().length; i++) {
-            //var restaurant = locations[i];
             var marker = new google.maps.Marker({
                 position: {lat: self.locations()[i].lat, lng: self.locations()[i].lng},
                 map: self.map,
                 title: name
-                //position: {lat: restaurant[1], lng: restaurant[2]},
-                //map: map,
-                //title: restaurant[0],
-                //zIndex: restaurant[3]
             });
         }
     };
+
+    self.locations = ko.observableArray([
+        {
+            name: "Cafe Hollander",
+            lat: (43.0664868),
+            lng: (-87.87782729999998)
+        },
+        {
+            name: "Beans & Barlery",
+            lat: (43.05928),
+            lng: (-87.892999)
+        },
+        {
+            name: "Colectivo",
+            lat: (43.0591269),
+            lng: (-87.88515799999999)
+        },
+        {
+            name: "Rochambo",
+            lat: (43.052783),
+            lng: (-87.88515799999999)
+        },
+        {
+            name: "Anodyne",
+            lat: (43.0254467),
+            lng: (-87.91364299999998)
+        }
+    ]);
+
 
     setMarkers(map);
 
