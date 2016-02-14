@@ -7,6 +7,7 @@
 // Source of help with connecting data to map:  https://discussions.udacity.com/t/ive-hit-a-wall/43376/5
 // Additional source:  http://stackoverflow.com/questions/29557938/removing-map-pin-with-search
 //var map, marker;
+
 //  Map scripts
 function initMap() {
     var myLatLng = {lat: 43.05, lng: -87.95};
@@ -16,24 +17,15 @@ function initMap() {
         center: myLatLng
     });
 
-    var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        title: 'Hello World!'
-    });
+    //var marker = new google.maps.Marker({
+    //    position: myLatLng,
+    //    map: map,
+    //    title: 'Hello World!'
+    //});
+
+    viewM.setMarkers();
 
 }
-
-//
-//function initMap() {
-////    var map = new google.maps.Map(document.getElementById('map'), {
-////        zoom: 5,
-////        center: new google.maps.LatLng(55, 11),
-////        mapTypeId: google.maps.MapTypeId.ROADMAP
-////    });
-////}
-
-
 
 function viewModel() {
     var self = this;
@@ -70,14 +62,15 @@ function viewModel() {
     //    }
     //]);
 
-    function setMarkers(map) {
+    this.setMarkers = function() {
         // Adds markers to the map.
+        var self = this;
 
         for (var i = 0; i < self.locations().length; i++) {
             //var restaurant = locations[i];
             var marker = new google.maps.Marker({
                 position: {lat: self.locations()[i].lat, lng: self.locations()[i].lng},
-                map: map,
+                map: self.map,
                 title: name
                 //position: {lat: restaurant[1], lng: restaurant[2]},
                 //map: map,
@@ -85,18 +78,16 @@ function viewModel() {
                 //zIndex: restaurant[3]
             });
         }
-    }
+    };
 
     setMarkers(map);
 
 }
 
+var viewM = new viewModel();
+ko.applyBindings(viewM);
 
-
-ko.applyBindings(new viewModel);
-
-
-console.log(map);
+console.log(setMarkers);
 
 //function point(name, lat, long) {
 //    this.name = name;
