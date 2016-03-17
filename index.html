@@ -16,7 +16,11 @@
     <body>
         <div>Search Bar Placeholder</div>
         <div>Restaurant & Coffeeshop Locations</div>
-        <div><input></div>
+        <div>
+            <input type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off"/>
+            <button type="submit">Search</button>
+        </div>
+
         <div>
             <ul data-bind="foreach: locations">
                 <li data-bind="text: name"></li>
