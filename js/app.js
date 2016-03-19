@@ -3,8 +3,6 @@
 // Source of help with connecting data to map:  https://discussions.udacity.com/t/ive-hit-a-wall/43376/5
 // Special thanks to Udacity coach Heidi for help with the markers!
 
-// Source:  http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
-
 //  Map scripts
 
 function viewModel() {
@@ -51,22 +49,7 @@ function viewModel() {
         }
     ]);
 
-    query: ko.observable('');
-
-    search: function(value) {
-        // remove all the current locations, which removes them from the view
-        viewModel.locations.removeAll();
-
-        for (var x in locations) {
-            if (locations[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-                viewModel.locations.push(locations[x]);
-            }
-        }
-    }
 }
-
-viewModel.query.subscribe(viewModel.search);
-
 
 function initMap() {
     var myLatLng = {lat: 43.05, lng: -87.95};
@@ -83,4 +66,3 @@ function initMap() {
 
 var viewM = new viewModel();
 ko.applyBindings(viewM);
-
