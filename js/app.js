@@ -58,6 +58,16 @@ var viewModel = function() {
         self.allPlaces.push(new Place(place));
     });
 
+    // Build InfoWindows
+    self.allPlaces.forEach(function(place) {
+        var infoWindowOptions = {
+            content: place.name
+        };
+
+        place.infoWindow = new google.maps.InfoWindow(infoWindowOptions);
+
+    });
+
 
     // Build Markers
     self.allPlaces.forEach(function(place) {
@@ -68,7 +78,9 @@ var viewModel = function() {
 
         place.marker = new google.maps.Marker(markerOptions);
 
-        // Note for future implementation:  You might also add listeners onto the marker, such as "click" listeners.
+        place.marker.addListener('click', function() {
+            place.infowindow.open(map, marker);
+        });
     });
 
     self.visiblePlaces = ko.observableArray();
