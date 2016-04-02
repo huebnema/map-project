@@ -14,17 +14,17 @@
     </head>
 
 
-    <body>
-        <div>Search Bar Placeholder</div>
-        <div>Restaurant & Coffeeshop Locations</div>
-        <div>
-            <input type="search" data-bind="textInput: userInput, event: {keyup: filterMarkers}"/>
-        </div>
-
-        <div>
+    <body class="wrapper">
+        <div class="row column text-center small-centered columns">
+            <h1>Milwaukee Map</h1>
+            <h2>Restaurant & Coffeeshop Locations</h2>
+            <input class="search-bar" type="search" data-bind="textInput: userInput, event: {keyup: filterMarkers}"/>
             <ul data-bind="foreach: visiblePlaces">
                 <li data-bind="text: name"></li>
             </ul>
+        </div>
+        <div>
+
         </div>
         <div id="images"></div>
         <div id="map"></div>

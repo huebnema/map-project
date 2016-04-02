@@ -8,3 +8,12 @@ html, body {
     height: 100%;
     width:80%;
 }
+
+.wrapper {
+    max-width: 1000px;
+}
+
+.search-bar {
+    max-width: 400px;
+
+}
