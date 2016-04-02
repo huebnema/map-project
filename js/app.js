@@ -4,6 +4,7 @@
 // Special thanks to Udacity coach Heidi for help with the markers!
 // Thanks to MCS's input in the discussion forum!:  https://discussions.udacity.com/t/filtering-google-maps-markers-with-list-view/34660 & http://codepen.io/prather-mcs/pen/KpjbNN?editors=001
 
+
 var locations = [
     {
         name: "Cafe Hollander",
@@ -24,33 +25,19 @@ var locations = [
     {
         name: "Anodyne",
         latLng: {lat: 43.0254467, lng: -87.91364299999998}
-    },
+    }
 ];
 
 var viewModel = function() {
 
     var self = this;
 
-    // this.setMarkers = function() {
-    //     // Adds markers to the map.
-    //     var self = this;
-    //
-    //     for (var i = 0; i < self.locations().length; i++) {
-    //         var marker = new google.maps.Marker({
-    //             position: {lat: self.locations()[i].lat, lng: self.locations()[i].lng},
-    //             map: self.map,
-    //             title: name
-    //         });
-    //     }
-    // };
-
-    // var latLng = self.locations()[i].lat, lng: self.locations()[i].lng;
 
     self.googleMap = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 43.05, lng: -87.95},
         zoom: 12
     });
-
+    
 
 // Build "Place" objects to store the place data from locations
     self.allPlaces = [];
@@ -77,9 +64,9 @@ var viewModel = function() {
         };
 
         place.marker = new google.maps.Marker(markerOptions);
-
         place.marker.addListener('click', function() {
-            place.infowindow.open(map, marker);
+            place.infoWindow.open(self.googleMap, place.marker);
+
         });
     });
 
@@ -129,20 +116,6 @@ var viewModel = function() {
 
 };
 
-// function initMap() {
-//     var myLatLng = {lat: 43.05, lng: -87.95};
-//
-//     var map = new google.maps.Map(document.getElementById('map'), {
-//         zoom: 12,
-//         center: myLatLng
-//     });
-//
-//     viewM.map = map;
-//     viewM.setMarkers();
-//
-// }
-
-// var viewM = new viewModel();
 
 ko.applyBindings(new viewModel());
 
