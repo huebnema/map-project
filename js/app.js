@@ -38,21 +38,6 @@ var viewModel = function() {
         zoom: 12
     });
 
-    // Call to Flickr to load images
-        var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-        $.getJSON( flickerAPI, {
-                tags: "mount rainier",
-                tagmode: "any",
-                format: "json"
-            })
-            .done(function( data ) {
-                $.each( data.items, function( i, item ) {
-                    $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
-                    if ( i === 3 ) {
-                        return false;
-                    }
-                });
-            });
 
 // Build "Place" objects to store the place data from locations
     self.allPlaces = [];
@@ -69,6 +54,22 @@ var viewModel = function() {
         place.infoWindow = new google.maps.InfoWindow(infoWindowOptions);
 
     });
+
+    // Call to Flickr to load images
+    var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+    $.getJSON( flickerAPI, {
+            tags: "place.name",
+            tagmode: "any",
+            format: "json"
+        })
+        .done(function( data ) {
+            $.each( data.items, function( i, item ) {
+                $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
+                if ( i === 3 ) {
+                    return false;
+                }
+            });
+        });
 
 
     // Build Markers
