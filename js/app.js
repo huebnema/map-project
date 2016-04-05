@@ -107,7 +107,19 @@ var viewModel = function() {
             place.infoWindow.open(self.googleMap, place.marker);
 
         });
+        place.marker.addListener('click', toggleBounce);
+
+        function toggleBounce() {
+            console.log(place.marker.getAnimation())
+            if (place.marker.getAnimation() !== undefined) {
+                place.marker.setAnimation(undefined);
+            } else {
+                place.marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
     });
+
+
 
     self.visiblePlaces = ko.observableArray();
 
