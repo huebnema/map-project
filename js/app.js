@@ -88,7 +88,11 @@ var viewModel = function() {
                         return false;
                     }
                 });
-            });
+            })
+
+        .fail(function() {
+            alert( "$.get failed!");
+        });
 
     });
 
