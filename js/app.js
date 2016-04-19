@@ -28,17 +28,22 @@ var locations = [
     }
 ];
 
+
+
 var viewModel = function() {
 
     var self = this;
+    var map;
 
 
-    self.googleMap = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 43.05, lng: -87.95},
-        zoom: 12
-    });
+    function initMap() {
 
+        self.googleMap = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 43.05, lng: -87.95},
+            zoom: 12
+        });
 
+    }
 // Build "Place" objects to store the place data from locations
     self.allPlaces = [];
     locations.forEach(function (place) {
