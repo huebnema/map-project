@@ -28,30 +28,30 @@ var locations = [
     }
 ];
 
+// Temoporary implementation of googleMap - find another solution later
+
+var googleMap; // declare googlemap in the global scope with the keyword var
+
+function initMap() {
+    googleMap = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 43.05, lng: -87.95},
+        zoom: 12
+    });
+    ko.applyBindings(new viewModel());
+}
 
 
 var viewModel = function() {
 
     var self = this;
-    var map;
-
-
-    function initMap() {
-
-        self.googleMap = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 43.05, lng: -87.95},
-            zoom: 12
-        });
-
-    }
-// Build "Place" objects to store the place data from locations
+    
+    // Build "Place" objects to store the place data from locations
     self.allPlaces = [];
     locations.forEach(function (place) {
         self.allPlaces.push(new Place(place));
 
 
     });
-
 
     // Build InfoWindows
     self.allPlaces.forEach(function (place) {
