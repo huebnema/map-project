@@ -107,13 +107,13 @@ var viewModel = function() {
     // Build Markers
     self.allPlaces.forEach(function(place) {
         var markerOptions = {
-            map: self.googleMap,
+            map: googleMap,
             position: place.latLng
         };
 
         place.marker = new google.maps.Marker(markerOptions);
         place.marker.addListener('click', function() {
-            place.infoWindow.open(self.googleMap, place.marker);
+            place.infoWindow.open(googleMap, place.marker);
 
         });
         place.marker.addListener('click', toggleBounce);
