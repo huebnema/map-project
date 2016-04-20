@@ -44,7 +44,7 @@ function initMap() {
 var viewModel = function() {
 
     var self = this;
-    
+
     // Build "Place" objects to store the place data from locations
     self.allPlaces = [];
     locations.forEach(function (place) {
@@ -177,6 +177,6 @@ var viewModel = function() {
 };
 
 
-ko.applyBindings(new viewModel());
+// ko.applyBindings(new viewModel());
 
 
