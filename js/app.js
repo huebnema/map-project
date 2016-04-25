@@ -119,7 +119,6 @@ var viewModel = function() {
         place.marker.addListener('click', toggleBounce);
 
         function toggleBounce() {
-            console.log(place.marker.getAnimation())
             if (place.marker.getAnimation() !== undefined) {
                 place.marker.setAnimation(undefined);
             } else {
