@@ -54,65 +54,60 @@ var viewModel = function() {
     });
 
     // Build InfoWindows
-    self.allPlaces.forEach(function (place) {
 
-        var infoWindowHTML =
-            '<div class="info-window"' +
-            'data-bind="template: { name: \'info-window-template\', data: name }">'
+    self.buildInfoWindow = function (place) {
+
+        viewModel().allPlaces.forEach(function (place) {
+
+            var infoWindowHTML =
+                '<div class="info-window"' +
+                'data-bind="template: { name: \'info-window-template\', data: name }">'
             '</div>';
 
-        var infoWindowOptions = {
-            content: infoWindowHTML + place.name
-        };
+            var infoWindowOptions = {
+                content: infoWindowHTML + place.name
+            };
 
-        place.infoWindow = new google.maps.InfoWindow(infoWindowOptions);
+            place.infoWindow = new google.maps.InfoWindow(infoWindowOptions);
 
-        var isInfoWindowLoaded = false;
+            var isInfoWindowLoaded = false;
 
-        google.maps.event.addListener(place.infoWindow, 'domready', function () {
-            if (!isInfoWindowLoaded) {
-                ko.applyBindings(self, $("#info-window")[0]);
-                isInfoWindowLoaded = true;
-            }
+            google.maps.event.addListener(place.infoWindow, 'domready', function () {
+                if (!isInfoWindowLoaded) {
+                    ko.applyBindings(self, $("#info-window")[0]);
+                    isInfoWindowLoaded = true;
+                }
 
+            });
         });
+    };
 
+    // Call to Flickr to load images
+    var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+    $.getJSON(flickerAPI, {
+            tags: place.infoWindow.name,
+            tagmode: "any",
+            format: "json"
+        })
+        .done(function (data) {
+            place.flickrImgUrl = data.items[0].media.m;
+        })
 
-
-        // Call to Flickr to load images
-        var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-        $.getJSON(flickerAPI, {
-                tags: place.infoWindow.name,
-                tagmode: "any",
-                format: "json"
-            })
-            .done(function (data) {
-                $.each(data.items, function (i, item) {
-                    $("<img>").attr("src", item.media.m).appendTo("#images");
-                    if (i === 3) {
-                        return false;
-                    }
-                });
-            })
-
-        .fail(function() {
-            alert( "$.get failed!");
+        .fail(function () {
+            alert("$.get failed!");
         });
-
-    });
-
-
 
 
     // Build Markers
-    self.allPlaces.forEach(function(place) {
+    console.log(self)
+    self.allPlaces.forEach(function (place) {
         var markerOptions = {
             map: googleMap,
             position: place.latLng
         };
 
         place.marker = new google.maps.Marker(markerOptions);
-        place.marker.addListener('click', function() {
+        place.marker.addListener('click', function () {
             place.infoWindow.open(googleMap, place.marker);
 
         });
@@ -128,12 +123,11 @@ var viewModel = function() {
     });
 
 
-
     self.visiblePlaces = ko.observableArray();
 
 
     // Remove data for places if they are typed in
-    self.allPlaces.forEach(function(place) {
+    self.allPlaces.forEach(function (place) {
         self.visiblePlaces.push(place);
     });
 
@@ -143,13 +137,13 @@ var viewModel = function() {
 
 
     // Remove places that are not related to the user's input
-    self.filterMarkers = function() {
+    self.filterMarkers = function () {
         var searchInput = self.userInput().toLowerCase();
 
         self.visiblePlaces.removeAll();
 
         // Begins search filter and determines if the input matches any of the places
-        self.allPlaces.forEach(function(place) {
+        self.allPlaces.forEach(function (place) {
             place.marker.setVisible(false);
 
             if (place.name.toLowerCase().indexOf(searchInput) !== -1) {
@@ -158,7 +152,7 @@ var viewModel = function() {
         });
 
 
-        self.visiblePlaces().forEach(function(place) {
+        self.visiblePlaces().forEach(function (place) {
             place.marker.setVisible(true);
         });
     };
@@ -171,8 +165,7 @@ var viewModel = function() {
         // You will save a reference to the Places' map marker after you build the
         // marker:
         this.marker = null;
-    }
-
+    };
 };
 
 
