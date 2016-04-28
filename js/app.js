@@ -37,6 +37,10 @@ function initMap() {
         center: {lat: 43.05, lng: -87.95},
         zoom: 12
     });
+    google.maps.event.addListener(googleMap, 'click', function () {
+        infowindow.close();
+    });
+
     ko.applyBindings(new viewModel());
 }
 
