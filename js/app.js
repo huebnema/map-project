@@ -64,12 +64,11 @@ var viewModel = function () {
 
     self.buildInfoWindow = function (place) {
 
-            var infoWindowHTML =
         var infoWindowHTML ='<h1>' + place.name + '</h1>' + '<img src="' + place.flickrImgUrl + '">';                    isInfoWindowLoaded = true;
 
 
         var infoWindowOptions = {
-                content: infoWindowHTML + place.name
+                content: infoWindowHTML
             };
 
             place.infoWindow = new google.maps.InfoWindow(infoWindowOptions);
