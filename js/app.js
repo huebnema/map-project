@@ -65,26 +65,14 @@ var viewModel = function () {
     self.buildInfoWindow = function (place) {
 
             var infoWindowHTML =
-                '<div class="info-window"' +
-                'data-bind="template: { name: \'info-window-template\', data: name }">'
-            '</div>';
+        var infoWindowHTML ='<h1>' + place.name + '</h1>' + '<img src="' + place.flickrImgUrl + '">';                    isInfoWindowLoaded = true;
 
-            var infoWindowOptions = {
+
+        var infoWindowOptions = {
                 content: infoWindowHTML + place.name
             };
 
             place.infoWindow = new google.maps.InfoWindow(infoWindowOptions);
-
-
-
-            var isInfoWindowLoaded = false;
-
-            google.maps.event.addListener(place.infoWindow, 'domready', function () {
-                if (!isInfoWindowLoaded) {
-                    var infoWindowHTML ='<h1>' + place.name + '</h1>' + '<img src="' + place.flickrImgUrl + '">';                    isInfoWindowLoaded = true;
-                }
-
-        });
 
     };
 
@@ -113,7 +101,7 @@ var viewModel = function () {
             })
 
             .fail(function () {
-                alert("$.get failed!");
+                alert("$.get failed to receive the images from Flickr.");
             });
 
 
