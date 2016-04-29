@@ -41,7 +41,7 @@ function initMap() {
 }
 
 
-var viewModel = function() {
+var viewModel = function () {
 
     var self = this;
 
@@ -57,8 +57,6 @@ var viewModel = function() {
 
     self.buildInfoWindow = function (place) {
 
-        viewModel().allPlaces.forEach(function (place) {
-
             var infoWindowHTML =
                 '<div class="info-window"' +
                 'data-bind="template: { name: \'info-window-template\', data: name }">'
@@ -70,37 +68,49 @@ var viewModel = function() {
 
             place.infoWindow = new google.maps.InfoWindow(infoWindowOptions);
 
+
+
             var isInfoWindowLoaded = false;
 
             google.maps.event.addListener(place.infoWindow, 'domready', function () {
                 if (!isInfoWindowLoaded) {
-                    ko.applyBindings(self, $("#info-window")[0]);
-                    isInfoWindowLoaded = true;
+                    var infoWindowHTML ='<h1>' + place.name + '</h1>' + '<img src="' + place.flickrImgUrl + '">';                    isInfoWindowLoaded = true;
                 }
 
-            });
         });
+
     };
 
-    // Call to Flickr to load images
-    var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-    $.getJSON(flickerAPI, {
-            tags: place.infoWindow.name,
-            tagmode: "any",
-            format: "json"
-        })
-        .done(function (data) {
-            place.flickrImgUrl = data.items[0].media.m;
-        })
 
-        .fail(function () {
-            alert("$.get failed!");
-        });
 
 
     // Build Markers
-    console.log(self)
     self.allPlaces.forEach(function (place) {
+
+
+
+        // Call to Flickr to load images
+
+
+        var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+        $.getJSON(flickerAPI, {
+                tags: place.name,
+                tagmode: "any",
+                format: "json"
+            })
+            .done(function (data) {
+
+                place.flickrImgUrl = data.items[0].media.m;
+                self.buildInfoWindow(place);
+
+            })
+
+            .fail(function () {
+                alert("$.get failed!");
+            });
+
+
+
         var markerOptions = {
             map: googleMap,
             position: place.latLng
@@ -120,7 +130,10 @@ var viewModel = function() {
                 place.marker.setAnimation(google.maps.Animation.BOUNCE);
             }
         }
+
+
     });
+
 
 
     self.visiblePlaces = ko.observableArray();
