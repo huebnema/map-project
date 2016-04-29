@@ -28,6 +28,13 @@ var locations = [
     }
 ];
 
+// Present an error if Google Maps fails to load
+function googleError() {
+    document.getElementById("map").innerHTML = "The map could not be loaded.";
+}
+
+
+
 // Temoporary implementation of googleMap - find another solution later
 
 var googleMap; // declare googlemap in the global scope with the keyword var
