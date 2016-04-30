@@ -122,6 +122,7 @@ var viewModel = function () {
                 place.marker.setAnimation(undefined);
             } else {
                 place.marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(toggleBounce, 700);
             }
         }
 
