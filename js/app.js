@@ -34,7 +34,6 @@ function googleError() {
 }
 
 
-
 // Temoporary implementation of googleMap - find another solution later
 
 var googleMap; // declare googlemap in the global scope with the keyword var
@@ -61,95 +60,79 @@ var viewModel = function () {
     });
 
 
-        // Build InfoWindows
+    // Build InfoWindows
 
-        self.buildInfoWindow = function (place) {
+    self.buildInfoWindow = function (place) {
 
-            var infoWindowHTML = '<h1>' + place.name + '</h1>' + '<img src="' + place.flickrImgUrl + '">';
-            isInfoWindowLoaded = true;
+        var infoWindowHTML = '<h1>' + place.name + '</h1>' + '<img src="' + place.flickrImgUrl + '">';
+        isInfoWindowLoaded = true;
 
 
-            var infoWindowOptions = {
-                content: infoWindowHTML
-            };
-
-            place.infoWindow = new google.maps.InfoWindow(infoWindowOptions);
-
+        var infoWindowOptions = {
+            content: infoWindowHTML
         };
 
+        place.infoWindow = new google.maps.InfoWindow(infoWindowOptions);
 
-        // Build Markers
-        self.allPlaces.forEach(function (place) {
-
-
-
-            // Call to Flickr to load images
+    };
 
 
-            var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-            $.getJSON(flickerAPI, {
-                    tags: place.name,
-                    tagmode: "any",
-                    format: "json"
-                })
-                .done(function (data) {
-
-                    place.flickrImgUrl = data.items[0].media.m;
-                    self.buildInfoWindow(place);
-
-                })
-
-                .fail(function () {
-                    alert("$.get failed to receive the images from Flickr.");
-                });
+    // Build Markers
+    self.allPlaces.forEach(function (place) {
 
 
-            var markerOptions = {
-                map: googleMap,
-                position: place.latLng
-            };
 
-            place.marker = new google.maps.Marker(markerOptions);
-            place.marker.addListener('click', function () {
-                place.infoWindow.open(googleMap, place.marker);
+        // Call to Flickr to load images
 
+
+        var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+        $.getJSON(flickerAPI, {
+                tags: place.name,
+                tagmode: "any",
+                format: "json"
+            })
+            .done(function (data) {
+
+                place.flickrImgUrl = data.items[0].media.m;
+                self.buildInfoWindow(place);
+
+            })
+
+            .fail(function () {
+                alert("$.get failed to receive the images from Flickr.");
             });
-            place.marker.addListener('click', toggleBounce);
-
-            function toggleBounce() {
-                if (place.marker.getAnimation() !== undefined) {
-                    place.marker.setAnimation(undefined);
-                } else {
-                    place.marker.setAnimation(google.maps.Animation.BOUNCE);
-                    setTimeout(toggleBounce, 700);
-                }
-            }
-
-            self.listViewSelect = function(place) {
-
-                // var markerOptions = {
-                //     map: googleMap,
-                //     position: place.latLng
-                // };
 
 
-                // place.marker = new google.maps.Marker(markerOptions);
-                // place.marker.addListener('click', function () {
-                    place.infoWindow.open(googleMap, place.marker);
+        var markerOptions = {
+            map: googleMap,
+            position: place.latLng
+        };
 
-                // });
-                place.marker.addListener('click', toggleBounce);
+        place.marker = new google.maps.Marker(markerOptions);
+        place.marker.addListener('click', function () {
+            place.infoWindow.open(googleMap, place.marker);
 
-                function toggleBounce() {
-                    if (place.marker.getAnimation() !== undefined) {
-                        place.marker.setAnimation(undefined);
-                    } else {
-                        place.marker.setAnimation(google.maps.Animation.BOUNCE);
-                        setTimeout(toggleBounce, 700);
-                    }
-                }
-            };
         });
+        place.marker.addListener('click', toggleBounce);
+
+        function toggleBounce() {
+            if (place.marker.getAnimation() !== undefined) {
+                place.marker.setAnimation(undefined);
+            } else {
+                place.marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(toggleBounce, 700);
+            }
+        }
+
+        self.listViewSelect = function (place) {
+            place.infoWindow.open(googleMap, place.marker);
+
+            place.marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(toggleBounce, 700);
+
+
+        };
+    });
 
 
     self.visiblePlaces = ko.observableArray();
