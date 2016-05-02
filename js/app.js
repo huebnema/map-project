@@ -101,7 +101,7 @@ var viewModel = function () {
                 self.buildInfoWindow(place);
             })
             .fail(function () {
-                alert("$.get failed to receive the images from Flickr.");
+                alert("The app failed to receive images from Flickr.");
             });
 
 
@@ -112,29 +112,15 @@ var viewModel = function () {
 
         place.marker = new google.maps.Marker(markerOptions);
         place.marker.addListener('click', function () {
-            place.infoWindow.open(googleMap, place.marker);
-
+            self.openMarker(place)
         });
-        place.marker.addListener('click', toggleBounce);
-
-        function toggleBounce() {
-            if (place.marker.getAnimation() !== undefined) {
-                place.marker.setAnimation(undefined);
-            } else {
-                place.marker.setAnimation(google.maps.Animation.BOUNCE);
-                setTimeout(toggleBounce, 700);
-            }
-        }
-
-        self.listViewSelect = function (place) {
-            place.infoWindow.open(googleMap, place.marker);
-
-            place.marker.setAnimation(google.maps.Animation.BOUNCE);
-            setTimeout(toggleBounce, 700);
-
-
-        };
     });
+
+    self.openMarker = function(place) {
+        place.infoWindow.open(googleMap, place.marker);
+        place.marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout( function() { place.marker.setAnimation(null) }, 700 );
+    };
 
 
     self.visiblePlaces = ko.observableArray();

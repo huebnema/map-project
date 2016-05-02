@@ -18,7 +18,7 @@
             <h2>Restaurant & Coffeeshop Locations</h2>
             <input class="search-bar" type="search" data-bind="textInput: userInput, event: {keyup: filterMarkers}"/>
             <ul data-bind="foreach: visiblePlaces">
-                <li data-bind="text: name, click: $parent.listViewSelect"></li>
+                <li data-bind="text: name, click: $parent.openMarker"></li>
             </ul>
         </div>
         <div>
