@@ -86,18 +86,20 @@ var viewModel = function () {
 
 
         var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-        $.getJSON(flickerAPI, {
-                tags: place.name,
-                tagmode: "any",
-                format: "json"
+        $.ajax({
+                dataType: "json",
+                url: flickerAPI,
+                data: {
+                    tags: place.name,
+                    tagmode: "any",
+                    format: "json",
+                },
+                timeout: 1000
             })
             .done(function (data) {
-
                 place.flickrImgUrl = data.items[0].media.m;
                 self.buildInfoWindow(place);
-
             })
-
             .fail(function () {
                 alert("$.get failed to receive the images from Flickr.");
             });
