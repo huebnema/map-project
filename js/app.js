@@ -62,9 +62,9 @@ var viewModel = function () {
 
     // Build InfoWindows
 
-    self.buildInfoWindow = function (place) {
+    self.buildInfoWindow = function (place, img) {
 
-        var infoWindowHTML = '<h1>' + place.name + '</h1>' + '<img src="' + place.flickrImgUrl + '">';
+        var infoWindowHTML = '<h1>' + place.name + '</h1>' + '<img src="' + img + '">';
         isInfoWindowLoaded = true;
 
 
@@ -80,10 +80,9 @@ var viewModel = function () {
     // Build Markers
     self.allPlaces.forEach(function (place) {
 
-
-
         // Call to Flickr to load images
 
+        var img;
 
         var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
         $.ajax({
@@ -98,10 +97,14 @@ var viewModel = function () {
             })
             .done(function (data) {
                 place.flickrImgUrl = data.items[0].media.m;
-                self.buildInfoWindow(place);
+                img = place.flickrImgUrl;
+                self.buildInfoWindow(place, img);
             })
             .fail(function () {
                 alert("The app failed to receive images from Flickr.");
+            //Should update with a better image
+            img = 'http://placehold.it/200/200';
+            self.buildInfoWindow(place, img);
             });
 
 
